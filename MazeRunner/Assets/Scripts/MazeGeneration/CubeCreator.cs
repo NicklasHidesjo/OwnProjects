@@ -54,32 +54,8 @@ public class CubeCreator : MonoBehaviour
 
         GenerateMazeQuick();
 
-        Debug.Log(visitedNodes.Count);
+        RemoveDuplicates();
 
-/*        foreach (var node in visitedNodes)
-        {
-            Debug.Log("hello2");
-            string nodeParent = node.transform.parent.name;
-            foreach (var direction in directions)
-            {
-                if(!node.GetWall(direction)) { continue; }
-                Vector2Int cords = node.Coordinates + direction;
-                Node neigbour = TryGetNode(cords, nodeParent);
-                if(neigbour == null) { continue; }
-                //neigbour.TurnOffWalls(-direction);
-                Debug.Log("removing walls");
-
-                Vector2Int dir = direction;
-                if (frontierParent == "Back" || frontierParent == "Bottom" || frontierParent == "Right")
-                {
-                    if (cords.y == 0)
-                        dir = Vector2Int.right;
-                }
-                neigbour.TurnOffWalls(-dir);
-                node.TurnOffWalls(dir);
-            }
-        }
-        Debug.Log("done");*/
         BuildWalls();
 
         // remove comment on line below if you want to generate a maze slowly (for visual porn only) (remember to comment row 45)
@@ -91,6 +67,63 @@ public class CubeCreator : MonoBehaviour
         Destroy(this);
     }
 
+    // refactor this
+    private void RemoveDuplicates()
+    {
+        Debug.Log(visitedNodes.Count);
+
+        foreach (var node in visitedNodes)
+        {
+            Debug.Log("hello2");
+            string nodeParent = node.transform.parent.name;
+            foreach (var direction in directions)
+            {
+                //if (!node.GetWall(direction)) { continue; }
+                Vector2Int cords = node.Coordinates + direction;
+                Node neigbour = TryGetNode(cords, nodeParent);
+                if (neigbour == null) { continue; }
+                //neigbour.TurnOffWalls(-direction);
+                Debug.Log("removing walls");
+
+                Vector2Int dir = direction;
+                if (nodeParent == "Back" || nodeParent == "Bottom" || nodeParent == "Right")
+                {
+                    // manually check what plane and then remove depending on the direction.
+                    // it should just be the opposite but for some reason it aint.
+
+                    #region non working stuff
+                    /*                    if (cords.y == 9 )
+                                        {
+                                            if(dir.y != 0)
+                                            {
+                                                neigbour.TurnOffWalls(Vector2Int.up);
+                                                continue;
+                                            }
+
+                                        }
+                                        else if (cords.y == 0 )
+                                        {
+                                            if (dir.y != 0)
+                                            {
+                                                neigbour.TurnOffWalls(Vector2Int.down);
+                                                continue;
+                                            }
+                                        }
+
+                                            //node.TurnOffWalls(dir);
+                                            neigbour.TurnOffWalls(-dir);*/
+                    #endregion
+                }
+                else
+                {
+                    neigbour.TurnOffWalls(-dir);
+                    //node.TurnOffWalls(dir);
+                }
+
+            }
+        }
+        Debug.Log("done");
+    }
 
     private void BuildWalls()
     {
@@ -139,10 +172,10 @@ public class CubeCreator : MonoBehaviour
         if (y == 0 || y == cubeSize.y || x == 0 || x == cubeSize.x)
             CreateEdges(i, x, y);
         if (sides[i].name == "Front" || sides[i].name == "Top" || sides[i].name == "Left")
-            Instantiate(frontTopLeftPole, GetPolePos(x, y, i), new Quaternion(0, 0, 0, 0), sides[i]);
+            Instantiate(frontTopLeftPole, GetPos(x, y, i), GetRot(x,y,i), sides[i]);
 
         else
-            Instantiate(backBottomRightPole, GetPolePos(x, y, i), new Quaternion(0, 0, 0, 0), sides[i]);
+            Instantiate(backBottomRightPole, GetPos(x, y, i), GetRot(x, y, i), sides[i]);
     }
 
     private void CreateEdges(int i, int x, int y)
@@ -150,27 +183,27 @@ public class CubeCreator : MonoBehaviour
         if (y == 0)
         {
             if (sides[i].name == "Front" || sides[i].name == "Top" || sides[i].name == "Left")
-                Instantiate(verticalEdgePoles[0], GetPolePos(x, y, i), new Quaternion(0, 0, 0, 0), sides[i]);
+                Instantiate(verticalEdgePoles[0], GetPos(x, y, i), GetRot(x,y,i), sides[i]);
             else
-                Instantiate(verticalEdgePoles[2], GetPolePos(x, y, i), new Quaternion(0, 0, 0, 0), sides[i]);
+                Instantiate(verticalEdgePoles[2], GetPos(x, y, i), GetRot(x,y,i), sides[i]);
         }
         if (y == cubeSize.y)
         {
-            Instantiate(verticalEdgePoles[1], GetPolePos(x, y, i), new Quaternion(0, 0, 0, 0), sides[i]);
+            Instantiate(verticalEdgePoles[1], GetPos(x, y, i), GetRot(x,y,i), sides[i]);
         }
         if (x == 0)
         {
             if (sides[i].name == "Front" || sides[i].name == "Top" || sides[i].name == "Left")
-                Instantiate(horizontalEdgePoles[0], GetPolePos(x, y, i), new Quaternion(0, 0, 0, 0), sides[i]);
+                Instantiate(horizontalEdgePoles[0], GetPos(x, y, i), GetRot(x,y,i), sides[i]);
             else
-                Instantiate(horizontalEdgePoles[2], GetPolePos(x, y, i), new Quaternion(0, 0, 0, 0), sides[i]);
+                Instantiate(horizontalEdgePoles[2], GetPos(x, y, i), GetRot(x,y,i), sides[i]);
         }
         if (x == cubeSize.x)
         {
             if (sides[i].name == "Front" || sides[i].name == "Top" || sides[i].name == "Left")
-                Instantiate(horizontalEdgePoles[1], GetPolePos(x, y, i), new Quaternion(0, 0, 0, 0), sides[i]);
+                Instantiate(horizontalEdgePoles[1], GetPos(x, y, i), GetRot(x,y,i), sides[i]);
             else
-                Instantiate(horizontalEdgePoles[3], GetPolePos(x, y, i), new Quaternion(0, 0, 0, 0), sides[i]);
+                Instantiate(horizontalEdgePoles[3], GetPos(x, y, i), GetRot(x,y,i), sides[i]);
         }
     }
 
@@ -203,7 +236,8 @@ public class CubeCreator : MonoBehaviour
 
     private void InitializeNewNode(int i, int x, int y)
     {
-        Node newNode = Instantiate(nodePoint, GetPos(x, y, i), new Quaternion(0, 0, 0, 0), sides[i]);
+        Node newNode = Instantiate(nodePoint, GetPos(x, y, i), GetRot(x,y,i), sides[i]);
+
         newNode.Coordinates = new Vector2Int(x, y);
 
         SetWallsAlongX(x, y, i, newNode);
@@ -231,6 +265,28 @@ public class CubeCreator : MonoBehaviour
                 return new Vector3(0, 0, 0);
         }
     }
+    private Quaternion GetRot(int x, int y, int i)
+    {
+        switch (sides[i].name)
+        {
+            case "Top":
+                return Quaternion.Euler(90,0,0);
+            case "Front":
+                return Quaternion.Euler(0, 0, 0);
+            case "Back":
+                return Quaternion.Euler(180, 0, 0);
+            case "Bottom":
+                return Quaternion.Euler(-90, 0, 0);
+            case "Right":
+                return Quaternion.Euler(0, -90, 90);
+            case "Left":
+                return Quaternion.Euler(0, 90, 90);
+            default:
+                Debug.Log("outside the switch plz check");
+                return Quaternion.Euler(0, 0, 0);
+        }
+    }
+
 
     #region Refactoring this should be easy (Low prio)
     private void SetWallsAlongX(int x, int y, int i, Node node)
@@ -365,7 +421,7 @@ public class CubeCreator : MonoBehaviour
                 mazeModellLeft[x, y] = node;
                 break;
             default:
-                Debug.Log("outside the switch plz check");
+                Debug.LogWarning("Couldn't add to mazemodells as side: "+ sides[i].name + " doesn't exist" );
                 break;
         }
     }
@@ -432,63 +488,40 @@ public class CubeCreator : MonoBehaviour
         int y = Random.Range(1, cubeSize.y - 1);
         int i = Random.Range(0, sides.Length);
 
-        i = 2;
-
         frontier.Add(GetMazeModellNode(new Vector2Int(x,y), sides[i].name));
     }
     private void HandleFrontierNode()
     {       
-        GetNewFrontier(); // gets a random node from frontier       
-        AddFrontierCells(); // Adds the non visited nodes to frontier     
-        ConnectNewNode(); // connects to one of the visitedNodes
-        frontier.Remove(frontierNode); // remove the node from the frontier list
+        GetNewFrontier();
+        AddFrontierCells(); 
+        ConnectNewNode(); 
+        frontier.Remove(frontierNode);
     }
     private void GetNewFrontier()
     {
-        //frontierNode = frontier[Random.Range(0, frontier.Count)];
         frontierNode = frontier.First();
         frontierParent = frontierNode.transform.parent.name;
         visitedNodes.Add(frontierNode);
     }
+
     #region methods handling the search and adding of nodes to frontier
     private void AddFrontierCells()
     {        
         foreach (var direction in directions)
-            HandleAddingToFrontier(frontierNode, direction);
+            AddToFrontier(direction);
     }
-    private void HandleAddingToFrontier(Node node, Vector2Int direction)
+    private void AddToFrontier(Vector2Int direction)
     {
-        string parent = "";
+        string parent = frontierParent;
         Vector2Int cords = frontierNode.Coordinates + direction;
         CheckParentAndCords(ref parent, ref cords);
-        CheckHowToAdd(parent, cords);
+
+        if (visitedNodes.Contains(TryGetNode(cords, parent))) { return; }
+        frontier.Add(TryGetNode(cords, parent));
     }
-    private void CheckHowToAdd(string parent, Vector2Int cords)
-    {
-        if (parent != "")
-        {
-            if (IsValidNode(cords, parent))
-                AddNodeToFrontier(parent, cords);
-        }
-        else
-        {
-            if (IsValidNode(cords, frontierParent))
-                AddNodeToFrontier(cords);
-        }
-    }
-    private void AddNodeToFrontier(Vector2Int cords)
-    {
-        Node newNode = GetMazeModellNode(cords, frontierParent);
-        if (!visitedNodes.Contains(newNode) && !frontier.Contains(newNode))
-            frontier.Add(newNode);
-    }
-    private void AddNodeToFrontier(string parent, Vector2Int cords)
-    {
-        Node newNode = GetMazeModellNode(cords, parent);
-        if (!visitedNodes.Contains(newNode) && !frontier.Contains(newNode))
-            frontier.Add(newNode);
-    }
+
     #endregion
+
     #region methods handling the connection of nodes
     private void ConnectNewNode()
     {
@@ -504,52 +537,32 @@ public class CubeCreator : MonoBehaviour
         if (closeVisisted.Count < 1)
             return;
 
-        HandleDestructionOfWalls(closeVisisted);
+        HandleWallTurnOff(closeVisisted);
 
     }
     private Node FindVisitedNode(Vector2Int direction)
     {
         Vector2Int cords = frontierNode.Coordinates + direction;
-        string parent = "";
-        Node node = null;
+        string parent = frontierParent;
 
         CheckParentAndCords(ref parent, ref cords);
 
-        if (parent != "")
-        {
-            if (IsValidNode(cords, parent) && visitedNodes.Contains(GetMazeModellNode(cords, parent)))
-                node = GetVisitedNode(direction, cords, parent);
-        }
-        else
-        {
-            if (IsValidNode(cords, frontierParent) && visitedNodes.Contains(GetMazeModellNode(cords, frontierParent)))
-                node = GetVisitedNode(direction, cords);
-        }
+        if (!visitedNodes.Contains(TryGetNode(cords, parent))) { return null; }
 
-        return node;
-    }
-    private Node GetVisitedNode(Vector2Int direction, Vector2Int cords, string parent)
-    {
-        Node node = GetMazeModellNode(cords, parent);
         GetMazeModellNode(cords, parent).ExploredFrom = direction;
-        return node;
+        return TryGetNode(cords,parent);
     }
-    private Node GetVisitedNode(Vector2Int direction, Vector2Int cords)
-    {
-        Node node = GetMazeModellNode(cords, frontierParent);
-        GetMazeModellNode(cords, frontierParent).ExploredFrom = direction;
-        return node;
-    }
-    private void HandleDestructionOfWalls(List<Node> closeVisisted)
+
+    private void HandleWallTurnOff(List<Node> closeVisisted)
     {
         Node bridgeTo = closeVisisted[Random.Range(0, closeVisisted.Count)];
 
-        if (frontierParent != bridgeTo.transform.parent.name)
-            DestroyWallsOnOtherSide(bridgeTo);
+        if (frontierParent == bridgeTo.transform.parent.name)
+            TurnOffWalls(bridgeTo);
         else
-            DestroyWallsOnSameSide(bridgeTo);
+            TurnOffSideWalls(bridgeTo);
     }
-    private void DestroyWallsOnSameSide(Node bridgeTo)
+    private void TurnOffWalls(Node bridgeTo)
     {
         Vector2Int dir = bridgeTo.ExploredFrom;
         if (frontierParent == "Back" || frontierParent  == "Bottom" || frontierParent == "Right")
@@ -557,140 +570,11 @@ public class CubeCreator : MonoBehaviour
         bridgeTo.TurnOffWalls(-dir);
         frontierNode.TurnOffWalls(dir);
     }
-    private void DestroyWallsOnOtherSide(Node bridgeTo)
+    private void TurnOffSideWalls(Node bridgeTo)
     {
-        switch (frontierParent)
-        {
-            case "Top":
-                switch(bridgeTo.transform.parent.name)
-                {
-                    case "Front":
-                        bridgeTo.TurnOffWalls(Vector2Int.up);
-                        frontierNode.TurnOffWalls(Vector2Int.down);
-                        break;
-                    case "Left":
-                        bridgeTo.TurnOffWalls(Vector2Int.right);
-                        frontierNode.TurnOffWalls(Vector2Int.zero);
-                        break;
-                    case "Back":
-                        bridgeTo.TurnOffWalls(Vector2Int.down);
-                        frontierNode.TurnOffWalls(Vector2Int.up);
-                        break;
-                    case "Right":
-                        bridgeTo.TurnOffWalls(Vector2Int.right);
-                        frontierNode.TurnOffWalls(Vector2Int.right);
-                        break;
-                }
-                break;
-            case "Front":
-                switch (bridgeTo.transform.parent.name)
-                {
-                    case "Top":
-                        bridgeTo.TurnOffWalls(Vector2Int.down);
-                        frontierNode.TurnOffWalls(Vector2Int.up);
-                        break;
-                    case "Right":
-                        bridgeTo.TurnOffWalls(Vector2Int.up);
-                        frontierNode.TurnOffWalls(Vector2Int.right);
-                        break;
-                    case "Bottom":
-                        bridgeTo.TurnOffWalls(Vector2Int.up);
-                        frontierNode.TurnOffWalls(Vector2Int.down);
-                        break;
-                    case "Left":
-                        bridgeTo.TurnOffWalls(Vector2Int.down);
-                        frontierNode.TurnOffWalls(Vector2Int.zero);
-                        break;
-                }
-                break;
-            case "Back":
-                switch (bridgeTo.transform.parent.name)
-                {
-                    case "Top":
-                        bridgeTo.TurnOffWalls(Vector2Int.up);
-                        frontierNode.TurnOffWalls(Vector2Int.down);
-                        break;
-                    case "Left":
-                        bridgeTo.TurnOffWalls(Vector2Int.up);
-                        frontierNode.TurnOffWalls(Vector2Int.zero);
-                        break;
-                    case "Bottom":
-                        bridgeTo.TurnOffWalls(Vector2Int.down);
-                        frontierNode.TurnOffWalls(Vector2Int.up);
-                        break;
-                    case "Right":
-                        bridgeTo.TurnOffWalls(Vector2Int.down);
-                        frontierNode.TurnOffWalls(Vector2Int.right);
-                        break;
-                }
-                break;
-            case "Bottom":
-                switch (bridgeTo.transform.parent.name)
-                {
-                    case "Left":
-                        bridgeTo.TurnOffWalls(Vector2Int.zero);
-                        frontierNode.TurnOffWalls(Vector2Int.zero);
-                        break;
-                    case "Front":
-                        bridgeTo.TurnOffWalls(Vector2Int.down);
-                        frontierNode.TurnOffWalls(Vector2Int.up);
-                        break;
-                    case "Right":
-                        bridgeTo.TurnOffWalls(Vector2Int.zero);
-                        frontierNode.TurnOffWalls(Vector2Int.right);
-                        break;
-                    case "Back":
-                        bridgeTo.TurnOffWalls(Vector2Int.up);
-                        frontierNode.TurnOffWalls(Vector2Int.down);
-                        break;
-                }
-                break;
-            case "Right":
-                switch (bridgeTo.transform.parent.name)
-                {
-                    case "Top":
-                        bridgeTo.TurnOffWalls(Vector2Int.right);
-                        frontierNode.TurnOffWalls(Vector2Int.right);
-                        break;
-                    case "Back":
-                        bridgeTo.TurnOffWalls(Vector2Int.right);
-                        frontierNode.TurnOffWalls(Vector2Int.down);
-                        break;
-                    case "Bottom":
-                        bridgeTo.TurnOffWalls(Vector2Int.right);
-                        frontierNode.TurnOffWalls(Vector2Int.zero);
-                        break;
-                    case "Front":
-                        bridgeTo.TurnOffWalls(Vector2Int.right);
-                        frontierNode.TurnOffWalls(Vector2Int.up);
-                        break;
-                }
-                break;
-            case "Left":
-                switch (bridgeTo.transform.parent.name)
-                {
-                    case "Top":
-                        bridgeTo.TurnOffWalls(Vector2Int.zero);
-                        frontierNode.TurnOffWalls(Vector2Int.right);
-                        break;
-                    case "Front":
-                        bridgeTo.TurnOffWalls(Vector2Int.zero);
-                        frontierNode.TurnOffWalls(Vector2Int.down);
-                        break;
-                    case "Bottom":
-                        bridgeTo.TurnOffWalls(Vector2Int.zero);
-                        frontierNode.TurnOffWalls(Vector2Int.zero);
-                        break;
-                    case "Back":
-                        bridgeTo.TurnOffWalls(Vector2Int.zero);
-                        frontierNode.TurnOffWalls(Vector2Int.up);
-                        break;
-                }
-                break;
-            default:
-                Debug.Log("outside the switch plz check");
-                break;
-        }
+        string bridgeSide = bridgeTo.transform.parent.name;
+        bridgeTo.TurnOffWalls(WallDeactivator.DeactivateNeigbourWall(bridgeSide, frontierParent));
+        frontierNode.TurnOffWalls(WallDeactivator.DeactivateOwnWall(bridgeSide, frontierParent));
     }
     #endregion
 
@@ -715,20 +599,6 @@ public class CubeCreator : MonoBehaviour
         {
             cords = ConvertXY.ConvertToLowY(frontierNode, cubeSize);
             parent = GetCubeSide.GetHighYSide(frontierNode);
-        }
-    }
-
-    private bool IsValidNode(Vector2Int cords, string nodeParent)
-    {
-        try
-        {
-            Node tryNode = GetMazeModellNode(cords, nodeParent);
-            return true;
-        }
-        catch
-        {
-            Debug.LogWarning("Outside the MazeModells");
-            return false;
         }
     }
 
