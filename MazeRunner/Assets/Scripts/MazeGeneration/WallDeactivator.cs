@@ -15,13 +15,13 @@ public static class WallDeactivator
                         return Vector2Int.up;
 
                     case "Left":
-                        return Vector2Int.right;
+                        return Vector2Int.up;
 
                     case "Back":
                         return Vector2Int.down;
 
                     case "Right":
-                        return Vector2Int.right;
+                        return Vector2Int.up;
 
                 }
                 break;
@@ -32,13 +32,13 @@ public static class WallDeactivator
                         return Vector2Int.down;
 
                     case "Right":
-                        return Vector2Int.up;
+                        return Vector2Int.zero;
 
                     case "Bottom":
                         return Vector2Int.up;
 
                     case "Left":
-                        return Vector2Int.down;
+                        return Vector2Int.right;
                 }
                 break;
             case "Back":
@@ -48,13 +48,13 @@ public static class WallDeactivator
                         return Vector2Int.up;
  
                     case "Left":
-                        return Vector2Int.up;
+                        return Vector2Int.zero;
 
                     case "Bottom":
                         return Vector2Int.down;
 
                     case "Right":
-                        return Vector2Int.down;
+                        return Vector2Int.right;
 
                 }
                 break;
@@ -62,13 +62,13 @@ public static class WallDeactivator
                 switch (connect)
                 {
                     case "Left":
-                        return Vector2Int.zero;
+                        return Vector2Int.down;
 
                     case "Front":
                         return Vector2Int.down;
 
                     case "Right":
-                        return Vector2Int.zero;
+                        return Vector2Int.down;
 
                     case "Back":
                         return Vector2Int.up;
@@ -127,7 +127,7 @@ public static class WallDeactivator
                     case "Front":
                         return (Vector2Int.down);
                     case "Left":
-                        return (Vector2Int.zero);
+                        return Vector2Int.zero;
                     case "Back":
                         return (Vector2Int.up);
                     case "Right":
@@ -144,7 +144,7 @@ public static class WallDeactivator
                     case "Bottom":
                         return (Vector2Int.down);
                     case "Left":
-                        return (Vector2Int.zero);
+                        return Vector2Int.zero;
                 }
                 break;
             case "Back":
@@ -153,7 +153,7 @@ public static class WallDeactivator
                     case "Top":
                         return (Vector2Int.down);
                     case "Left":
-                        return (Vector2Int.zero);
+                        return Vector2Int.zero;
                     case "Bottom":
                         return (Vector2Int.up);
                     case "Right":
@@ -177,26 +177,26 @@ public static class WallDeactivator
                 switch (nodeParent)
                 {
                     case "Top":
-                        return (Vector2Int.right);
-                    case "Back":
-                        return (Vector2Int.down);
-                    case "Bottom":
-                        return (Vector2Int.zero);
-                    case "Front":
                         return (Vector2Int.up);
+                    case "Back":
+                        return (Vector2Int.right);
+                    case "Bottom":
+                        return (Vector2Int.down);
+                    case "Front":
+                        return Vector2Int.zero;
                 }
                 break;
             case "Left":
                 switch (nodeParent)
                 {
                     case "Top":
-                        return (Vector2Int.right);
-                    case "Front":
-                        return (Vector2Int.down);
-                    case "Bottom":
-                        return (Vector2Int.zero);
-                    case "Back":
                         return (Vector2Int.up);
+                    case "Front":
+                        return (Vector2Int.right);
+                    case "Bottom":
+                        return (Vector2Int.down);
+                    case "Back":
+                        return Vector2Int.zero;
                 }
                 break;
             default:

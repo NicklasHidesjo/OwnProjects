@@ -13,13 +13,13 @@ public static class GetCubeSide
             case "Front":
                 return "Top";
             case "Back":
-                return "Top";
+                return "Bottom";
             case "Bottom":
-                return "Back";
+                return "Front";
             case "Right":
-                return "Back";
+                return "Top";
             case "Left":
-                return "Back";
+                return "Top";
             default:
                 Debug.Log("outside the switch plz check");
                 return null;
@@ -34,13 +34,13 @@ public static class GetCubeSide
             case "Front":
                 return "Bottom";
             case "Back":
-                return "Bottom";
+                return "Top";
             case "Bottom":
-                return "Front";
+                return "Back";
             case "Right":
-                return "Front";
+                return "Bottom";
             case "Left":
-                return "Front";
+                return "Bottom";
             default:
                 Debug.Log("outside the switch plz check");
                 return null;
@@ -59,9 +59,9 @@ public static class GetCubeSide
             case "Bottom":
                 return "Right";
             case "Right":
-                return "Top";
+                return "Back";
             case "Left":
-                return "Top";
+                return "Front";
             default:
                 Debug.Log("outside the switch plz check");
                 return null;
@@ -80,9 +80,9 @@ public static class GetCubeSide
             case "Bottom":
                 return "Left";
             case "Right":
-                return "Bottom";
+                return "Front";
             case "Left":
-                return "Bottom";
+                return "Back";
             default:
                 Debug.Log("outside the switch plz check");
                 return null;
