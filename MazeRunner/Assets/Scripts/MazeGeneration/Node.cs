@@ -143,5 +143,4 @@ public class Node : MonoBehaviour
 		Debug.LogWarning("No valid direction");
 		return false;
 	}
-
 }

@@ -4,18 +4,23 @@ using UnityEngine;
 
 public static class ConvertXY
 {
+    // refactor this with either a default or falling cases
+
     public static Vector2Int ConvertToLowY(Node node, Vector2Int cubeSize)
     {
+        int x = cubeSize.x - 1;
+        int y = cubeSize.y - 1;
+
         switch (node.transform.parent.name)
         {
             case "Top":
-                return new Vector2Int(node.Coordinates.x, cubeSize.y - 1);
+                return new Vector2Int(node.Coordinates.x, 0);
 
             case "Front":
                 return new Vector2Int(node.Coordinates.x, 0);
 
             case "Back":
-                return new Vector2Int(node.Coordinates.x, node.Coordinates.y);
+                return new Vector2Int(node.Coordinates.x, 0);
 
             case "Bottom":
                 return new Vector2Int(node.Coordinates.x, 0);
@@ -24,7 +29,7 @@ public static class ConvertXY
                 return new Vector2Int(node.Coordinates.y, node.Coordinates.x);
 
             case "Left":
-                return new Vector2Int(0, node.Coordinates.x);
+                return new Vector2Int(0, y - node.Coordinates.x);
 
             default:
                 Debug.Log("outside the switch plz check");
@@ -33,22 +38,25 @@ public static class ConvertXY
     }
     public static Vector2Int ConvertToHighY(Node node, Vector2Int cubeSize)
     {
+        int x = cubeSize.x - 1;
+        int y = cubeSize.y - 1;
+
         switch (node.transform.parent.name)
         {
             case "Top":
-                return new Vector2Int(node.Coordinates.x, cubeSize.y - 1);
+                return new Vector2Int(node.Coordinates.x, y);
 
             case "Front":
-                return new Vector2Int(node.Coordinates.x, 0);
+                return new Vector2Int(node.Coordinates.x, y);
 
             case "Back":
-                return new Vector2Int(node.Coordinates.x, cubeSize.y - 1);
+                return new Vector2Int(node.Coordinates.x, y);
 
             case "Bottom":
-                return new Vector2Int(node.Coordinates.x, 0);
+                return new Vector2Int(node.Coordinates.x, y);
 
             case "Right":
-                return new Vector2Int(cubeSize.x - 1, node.Coordinates.x);
+                return new Vector2Int(x, y - node.Coordinates.x);
 
             case "Left":
                 return new Vector2Int(0, node.Coordinates.x);
@@ -60,22 +68,25 @@ public static class ConvertXY
     }
     public static Vector2Int ConvertToLowX(Node node, Vector2Int cubeSize)
     {
+        int x = cubeSize.x - 1;
+        int y = cubeSize.y - 1;
+
         switch (node.transform.parent.name)
         {
             case "Top":
-                return new Vector2Int(node.Coordinates.x, node.Coordinates.y);
-
-            case "Front":
-                return new Vector2Int(node.Coordinates.y, 0);
-
-            case "Back":
                 return new Vector2Int(node.Coordinates.y, node.Coordinates.x);
 
+            case "Front":
+                return new Vector2Int(0 , node.Coordinates.y);
+
+            case "Back":
+                return new Vector2Int(node.Coordinates.x,node.Coordinates.y);
+
             case "Bottom":
-                return new Vector2Int(0, node.Coordinates.y);
+                return new Vector2Int(x - node.Coordinates.y, 0);
 
             case "Right":
-                return new Vector2Int(node.Coordinates.x, node.Coordinates.y);
+                return new Vector2Int(node.Coordinates.x, y - node.Coordinates.y);
 
             case "Left":
                 return new Vector2Int(0, node.Coordinates.y);
@@ -87,25 +98,28 @@ public static class ConvertXY
     }
     public static Vector2Int ConvertToHighX(Node node, Vector2Int cubeSize)
     {
+        int x = cubeSize.x - 1;
+        int y = cubeSize.y - 1;
+
         switch (node.transform.parent.name)
         {
             case "Top":
-                return new Vector2Int(cubeSize.x - 1, node.Coordinates.y);
+                return new Vector2Int(x - node.Coordinates.y, y);
 
             case "Front":
-                return new Vector2Int(node.Coordinates.y, 0);
+                return new Vector2Int(x, node.Coordinates.y);
 
             case "Back":
-                return new Vector2Int(node.Coordinates.y, cubeSize.y - 1);
-
-            case "Bottom":
                 return new Vector2Int(node.Coordinates.x, node.Coordinates.y);
 
+            case "Bottom":
+                return new Vector2Int(node.Coordinates.y, node.Coordinates.x);
+
             case "Right":
-                return new Vector2Int(cubeSize.x - 1, node.Coordinates.y);
+                return new Vector2Int(x, node.Coordinates.y);
 
             case "Left":
-                return new Vector2Int(0, node.Coordinates.y);
+                return new Vector2Int(0, y - node.Coordinates.y);
 
             default:
                 Debug.Log("outside the switch plz check");
