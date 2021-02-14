@@ -40,29 +40,83 @@ public class CubeCreator : MonoBehaviour
         Vector2Int.left
     };
 
+/*    IEnumerator Start()
+    {
+        Debug.Log("Initializing");
+        Init();
+        Debug.Log("Done initializing");
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Placing poles");
+        PlacePoles();
+        Debug.Log("Done placing poles");
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Generating cube");
+        GenerateCube();
+        Debug.Log("Done generating cube");
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Generating maze");
+        GenerateMaze();
+        Debug.Log("Done generating maze");
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Removing duplicates");
+        RemoveDuplicates();
+        Debug.Log("Done removing duplicates");
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Building walls");
+        BuildWalls();
+        Debug.Log("Done building walls");
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Offsetting sides");
+        OffSetSides();
+        Debug.Log("Done offsetting sides");
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Combining meshes");
+        GetComponent<MeshCombiner>().GenerateMesh();
+        Debug.Log("Done combining meshses");
+        Destroy(this);
+    }*/
+
     void Start()
     {
+        Debug.Log("Initializing");
         Init();
+        Debug.Log("Done initializing");
 
+        Debug.Log("Placing poles");
         PlacePoles();
+        Debug.Log("Done placing poles");
 
+        Debug.Log("Generating cube");
         GenerateCube();
+        Debug.Log("Done generating cube");
 
+        Debug.Log("Generating maze");
         GenerateMaze();
+        Debug.Log("Done generating maze");
 
+        Debug.Log("Removing duplicates");
         RemoveDuplicates();
-        
+        Debug.Log("Done removing duplicates");
+
+        Debug.Log("Building walls");
         BuildWalls();
+        Debug.Log("Done building walls");
 
+        Debug.Log("Offsetting sides");
         OffSetSides();
+        Debug.Log("Done offsetting sides");
 
+        Debug.Log("Combining meshes");
         GetComponent<MeshCombiner>().GenerateMesh();
+        Debug.Log("Done combining meshses");
 
         Destroy(this);
     }
 
+
     private void Init()
     {
+        FindObjectOfType<RotationScript>().SetScale(cubeSize);
         gridSize = (int)nodePoint.transform.localScale.x;
         ground.transform.localScale = new Vector3(cubeSize.x, cubeSize.y, cubeSize.x);
         SetNodeHastSets();

@@ -20,7 +20,6 @@ public class MeshCombiner : MonoBehaviour
             combine[i].mesh = meshFilters[i].sharedMesh;
             combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
             Destroy(meshFilters[i].gameObject);
-            //meshFilters[i].gameObject.SetActive(false);
         }
 
         GetComponent<MeshFilter>().mesh = mesh;
