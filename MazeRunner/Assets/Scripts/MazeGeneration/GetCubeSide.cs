@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class GetCubeSide
 {
-    public static string GetHighYSide(Node node)
+    public static string GetHighYSide(ScriptableNode node)
     {
-        switch (node.transform.parent.name)
+        switch (node.Parent)
         {
             case "Top":
                 return "Back";
@@ -25,9 +25,9 @@ public static class GetCubeSide
                 return null;
         }
     }
-    public static string GetLowYSide(Node node)
+    public static string GetLowYSide(ScriptableNode node)
     {
-        switch (node.transform.parent.name)
+        switch (node.Parent)
         {
             case "Top":
                 return "Front";
@@ -46,9 +46,9 @@ public static class GetCubeSide
                 return null;
         }
     }
-    public static string GetHighXSide(Node node)
+    public static string GetHighXSide(ScriptableNode node)
     {
-        switch (node.transform.parent.name)
+        switch (node.Parent)
         {
             case "Top":
                 return "Right";
@@ -67,9 +67,9 @@ public static class GetCubeSide
                 return null;
         }
     }
-    public static string GetLowXSide(Node node)
+    public static string GetLowXSide(ScriptableNode node)
     {
-        switch (node.transform.parent.name)
+        switch (node.Parent)
         {
             case "Top":
                 return "Left";

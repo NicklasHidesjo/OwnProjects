@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03d836c6483a9b84e83c3c055eff0031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeSize: {x: 200, y: 200}
+  cubeSize: {x: 6, y: 6}
   sides:
   - {fileID: 1319104439}
   - {fileID: 815663611}
@@ -164,7 +164,7 @@ MonoBehaviour:
   - {fileID: 1953030122}
   - {fileID: 715382236}
   - {fileID: 157013553}
-  nodePoint: {fileID: 3200609941432160862, guid: cfb3132a2d4cb4a4893289c480638c19, type: 3}
+  nodePoint: {fileID: 0}
   pole: {fileID: 7704560200023720210, guid: 6426fc6552ed05140a294e2a34e066f7, type: 3}
   ground: {fileID: 1450401232}
   verticalEdgePoles:
@@ -173,6 +173,11 @@ MonoBehaviour:
   horizontalEdgePoles:
   - {fileID: 1080405508411511912, guid: a3afc8c0e54c4a64b96dbb4f0dc596ea, type: 3}
   - {fileID: 5451431947693805, guid: 46659dfcb06d7134f8bd3668b887a555, type: 3}
+  walls:
+  - {fileID: 8258519775808451694, guid: 63d2a70a91c9e6741a7e867d6713e8bd, type: 3}
+  - {fileID: 149885996995389666, guid: 5da97515dee5d2c43977d4530dbb09ad, type: 3}
+  - {fileID: 2934472557500867437, guid: 34b6844ec59335848830d75bfd1b7484, type: 3}
+  - {fileID: 5296022235319274335, guid: df283a0cb1c0bba40ac52d06bc33defa, type: 3}
 --- !u!4 &25261379
 Transform:
   m_ObjectHideFlags: 0
@@ -895,7 +900,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828226362}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ea8be55e0431fa44a942b2ff36ef5c9, type: 3}
   m_Name: 
@@ -964,7 +969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &1915416237
 Light:
   m_ObjectHideFlags: 0

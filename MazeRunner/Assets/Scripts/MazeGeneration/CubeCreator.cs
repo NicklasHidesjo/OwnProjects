@@ -9,24 +9,25 @@ public class CubeCreator : MonoBehaviour
     [SerializeField] Vector2Int cubeSize;
     [SerializeField] Transform[] sides;
 
-    [SerializeField] Node nodePoint;
+    [SerializeField] ScriptableNode nodePoint;
     [SerializeField] GameObject pole;
     [SerializeField] GameObject ground;
     [SerializeField] GameObject[] verticalEdgePoles;
     [SerializeField] GameObject[] horizontalEdgePoles;
+    [SerializeField] GameObject[] walls;
 
 
-    Node[,] mazeModellTop;
-    Node[,] mazeModellBottom;
-    Node[,] mazeModellFront;
-    Node[,] mazeModellBack;
-    Node[,] mazeModellRight;
-    Node[,] mazeModellLeft;
+    ScriptableNode[,] mazeModellTop;
+    ScriptableNode[,] mazeModellBottom;
+    ScriptableNode[,] mazeModellFront;
+    ScriptableNode[,] mazeModellBack;
+    ScriptableNode[,] mazeModellRight;
+    ScriptableNode[,] mazeModellLeft;
 
-    HashSet<Node> visitedNodes;
-    HashSet<Node> frontier;
+    HashSet<ScriptableNode> visitedNodes;
+    HashSet<ScriptableNode> frontier;
 
-    Node currentNode;
+    ScriptableNode currentNode;
     string currentNodeParent;
     int gridSize;
 
@@ -40,41 +41,41 @@ public class CubeCreator : MonoBehaviour
         Vector2Int.left
     };
 
-/*    IEnumerator Start()
-    {
-        Debug.Log("Initializing");
-        Init();
-        Debug.Log("Done initializing");
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log("Placing poles");
-        PlacePoles();
-        Debug.Log("Done placing poles");
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log("Generating cube");
-        GenerateCube();
-        Debug.Log("Done generating cube");
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log("Generating maze");
-        GenerateMaze();
-        Debug.Log("Done generating maze");
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log("Removing duplicates");
-        RemoveDuplicates();
-        Debug.Log("Done removing duplicates");
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log("Building walls");
-        BuildWalls();
-        Debug.Log("Done building walls");
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log("Offsetting sides");
-        OffSetSides();
-        Debug.Log("Done offsetting sides");
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log("Combining meshes");
-        GetComponent<MeshCombiner>().GenerateMesh();
-        Debug.Log("Done combining meshses");
-        Destroy(this);
-    }*/
+    /*    IEnumerator Start()
+        {
+            Debug.Log("Initializing");
+            Init();
+            Debug.Log("Done initializing");
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Placing poles");
+            PlacePoles();
+            Debug.Log("Done placing poles");
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Generating cube");
+            GenerateCube();
+            Debug.Log("Done generating cube");
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Generating maze");
+            GenerateMaze();
+            Debug.Log("Done generating maze");
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Removing duplicates");
+            RemoveDuplicates();
+            Debug.Log("Done removing duplicates");
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Building walls");
+            BuildWalls();
+            Debug.Log("Done building walls");
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Offsetting sides");
+            OffSetSides();
+            Debug.Log("Done offsetting sides");
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Combining meshes");
+            GetComponent<MeshCombiner>().GenerateMesh();
+            Debug.Log("Done combining meshses");
+            Destroy(this);
+        }*/
 
     void Start()
     {
@@ -113,11 +114,32 @@ public class CubeCreator : MonoBehaviour
         Destroy(this);
     }
 
+/*    void Start()
+    {
+        Init();
+
+        PlacePoles();
+
+        GenerateCube();
+
+        GenerateMaze();
+
+        RemoveDuplicates();
+
+        BuildWalls();
+
+        OffSetSides();
+
+        //GetComponent<MeshCombiner>().GenerateMesh();
+
+        Destroy(this);
+    }*/
+
 
     private void Init()
     {
         FindObjectOfType<RotationScript>().SetScale(cubeSize);
-        gridSize = (int)nodePoint.transform.localScale.x;
+        gridSize = 1;
         ground.transform.localScale = new Vector3(cubeSize.x, cubeSize.y, cubeSize.x);
         SetNodeHastSets();
         SetMazeModellArrays();
@@ -125,17 +147,17 @@ public class CubeCreator : MonoBehaviour
     }
     private void SetNodeHastSets()
     {
-        visitedNodes = new HashSet<Node>();
-        frontier = new HashSet<Node>();
+        visitedNodes = new HashSet<ScriptableNode>();
+        frontier = new HashSet<ScriptableNode>();
     }
     private void SetMazeModellArrays()
     {
-        mazeModellTop = new Node[cubeSize.x, cubeSize.y];
-        mazeModellBottom = new Node[cubeSize.x, cubeSize.y];
-        mazeModellFront = new Node[cubeSize.x, cubeSize.y];
-        mazeModellBack = new Node[cubeSize.x, cubeSize.y];
-        mazeModellRight = new Node[cubeSize.x, cubeSize.y];
-        mazeModellLeft = new Node[cubeSize.x, cubeSize.y];
+        mazeModellTop = new ScriptableNode[cubeSize.x, cubeSize.y];
+        mazeModellBottom = new ScriptableNode[cubeSize.x, cubeSize.y];
+        mazeModellFront = new ScriptableNode[cubeSize.x, cubeSize.y];
+        mazeModellBack = new ScriptableNode[cubeSize.x, cubeSize.y];
+        mazeModellRight = new ScriptableNode[cubeSize.x, cubeSize.y];
+        mazeModellLeft = new ScriptableNode[cubeSize.x, cubeSize.y];
     }
     private void GenerateOffset()
     {
@@ -199,7 +221,7 @@ public class CubeCreator : MonoBehaviour
     {
         foreach (var node in visitedNodes)
         {
-            string nodeParent = node.transform.parent.name;
+            string nodeParent = node.Parent;
             currentNode = node;
 
             foreach (var direction in directions)
@@ -210,10 +232,10 @@ public class CubeCreator : MonoBehaviour
                 Vector2Int cords = node.Coordinates + direction;
 
                 CheckParentAndCords(ref parent, ref cords);
-                Node connect = TryGetNode(cords, parent);
+                ScriptableNode connect = TryGetNode(cords, parent);
 
                 if (connect == null) { continue; }
-                string connectParent = connect.transform.parent.name;
+                string connectParent = connect.Parent;
 
                 if (connectParent != nodeParent)
                 {
@@ -231,7 +253,7 @@ public class CubeCreator : MonoBehaviour
     {
         foreach (var node in visitedNodes)
         {
-            node.BuildWalls();
+            node.BuildWalls(walls);
         }
     }
 
@@ -253,9 +275,8 @@ public class CubeCreator : MonoBehaviour
 
     private void InitializeNewNode(int i, int x, int y)
     {
-        Node newNode = Instantiate(nodePoint, GetPos(x, y, i), Quaternion.identity, sides[i]);
-
-        newNode.Coordinates = new Vector2Int(x, y);
+        ScriptableNode newNode = (ScriptableNode)ScriptableObject.CreateInstance("ScriptableNode");
+        newNode.Initialize(GetPos(x, y, i), new Vector2Int(x, y), gridSize, sides[i]);
 
         CreateEdgeWalls(x, y, newNode);
         SaveNodeToMazeModell(x, y, i, newNode);
@@ -266,7 +287,7 @@ public class CubeCreator : MonoBehaviour
     }
 
 
-    private void CreateEdgeWalls(int x, int y, Node node)
+    private void CreateEdgeWalls(int x, int y, ScriptableNode node)
     {
         if (x == cubeSize.x - 1)
         {
@@ -286,7 +307,7 @@ public class CubeCreator : MonoBehaviour
         }
     }
 
-    private void SaveNodeToMazeModell(int x, int y, int i, Node node)
+    private void SaveNodeToMazeModell(int x, int y, int i, ScriptableNode node)
     {
         switch (sides[i].name)
         {
@@ -387,7 +408,7 @@ public class CubeCreator : MonoBehaviour
     private void GetNewFrontier()
     {
         currentNode = frontier.First();
-        currentNodeParent = currentNode.transform.parent.name;
+        currentNodeParent = currentNode.Parent;
         visitedNodes.Add(currentNode);
     }
 
@@ -398,7 +419,7 @@ public class CubeCreator : MonoBehaviour
     }
     private void AddToFrontier(Vector2Int direction)
     {
-        Node node = FindNode(direction);
+        ScriptableNode node = FindNode(direction);
         if (node == null) return;
         if (visitedNodes.Contains(node)) return;
 
@@ -410,11 +431,11 @@ public class CubeCreator : MonoBehaviour
     #region methods handling the connection of nodes
     private void ConnectNewNode()
     {
-        List<Node> closeVisisted = new List<Node>();
+        List<ScriptableNode> closeVisisted = new List<ScriptableNode>();
 
         foreach (var direction in directions)
         {
-            Node nodeToAdd = FindVisitedNode(direction);
+            ScriptableNode nodeToAdd = FindVisitedNode(direction);
             if (nodeToAdd != null)
                 closeVisisted.Add(nodeToAdd);
         }
@@ -425,9 +446,9 @@ public class CubeCreator : MonoBehaviour
         HandleWallTurnOff(closeVisisted);
 
     }
-    private Node FindVisitedNode(Vector2Int direction)
+    private ScriptableNode FindVisitedNode(Vector2Int direction)
     {
-        Node node = FindNode(direction);
+        ScriptableNode node = FindNode(direction);
         if (node == null) return null;
         if (!visitedNodes.Contains(node)) { return null; }
 
@@ -435,31 +456,31 @@ public class CubeCreator : MonoBehaviour
         return node;
     }
 
-    private void HandleWallTurnOff(List<Node> closeVisisted)
+    private void HandleWallTurnOff(List<ScriptableNode> closeVisisted)
     {
-        Node bridgeTo = closeVisisted[Random.Range(0, closeVisisted.Count)];
+        ScriptableNode bridgeTo = closeVisisted[Random.Range(0, closeVisisted.Count)];
 
-        if (currentNodeParent == bridgeTo.transform.parent.name)
+        if (currentNodeParent == bridgeTo.Parent)
             TurnOffWalls(bridgeTo);
         else
             TurnOffSideWalls(bridgeTo);
     }
-    private void TurnOffWalls(Node bridgeTo)
+    private void TurnOffWalls(ScriptableNode bridgeTo)
     {
         Vector2Int dir = bridgeTo.ExploredFrom;
         bridgeTo.TurnOffWalls(-dir);
         currentNode.TurnOffWalls(dir);
     }
-    private void TurnOffSideWalls(Node bridgeTo)
+    private void TurnOffSideWalls(ScriptableNode bridgeTo)
     {
-        string bridgeSide = bridgeTo.transform.parent.name;
+        string bridgeSide = bridgeTo.Parent;
         bridgeTo.TurnOffWalls(WallDeactivator.DeactivateNeigbourWall(bridgeSide, currentNodeParent));
         currentNode.TurnOffWalls(WallDeactivator.DeactivateOwnWall(bridgeSide, currentNodeParent));
     }
     #endregion
 
 
-    private Node FindNode(Vector2Int direction)
+    private ScriptableNode FindNode(Vector2Int direction)
     {
         string parent = currentNodeParent;
         Vector2Int cords = currentNode.Coordinates + direction;
@@ -492,7 +513,7 @@ public class CubeCreator : MonoBehaviour
         }
     }
 
-    private Node TryGetNode(Vector2Int cords, string nodeParent)
+    private ScriptableNode TryGetNode(Vector2Int cords, string nodeParent)
     {
         try
         {
@@ -505,7 +526,7 @@ public class CubeCreator : MonoBehaviour
         }
     }
 
-    private Node GetMazeModellNode(Vector2Int cords, string name)
+    private ScriptableNode GetMazeModellNode(Vector2Int cords, string name)
     {
         switch (name)
         {

@@ -3,7 +3,11 @@ guid: 376f282bda5029447854697f9ce4881e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - verticalWall: {fileID: 2934472557500867437, guid: 34b6844ec59335848830d75bfd1b7484, type: 3}
+  - horizontalWall: {fileID: 8258519775808451694, guid: 63d2a70a91c9e6741a7e867d6713e8bd, type: 3}
+  - thiccHorizontal: {fileID: 149885996995389666, guid: 5da97515dee5d2c43977d4530dbb09ad, type: 3}
+  - thiccVertical: {fileID: 5296022235319274335, guid: df283a0cb1c0bba40ac52d06bc33defa, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
