@@ -301,11 +301,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3273432792047113372, guid: 63d2a70a91c9e6741a7e867d6713e8bd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.456
       objectReference: {fileID: 0}
     - target: {fileID: 3273432792047113372, guid: 63d2a70a91c9e6741a7e867d6713e8bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3273432792047113372, guid: 63d2a70a91c9e6741a7e867d6713e8bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -338,6 +338,10 @@ PrefabInstance:
     - target: {fileID: 8258519775808451694, guid: 63d2a70a91c9e6741a7e867d6713e8bd, type: 3}
       propertyPath: m_Name
       value: Horizontal wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258519775808451694, guid: 63d2a70a91c9e6741a7e867d6713e8bd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63d2a70a91c9e6741a7e867d6713e8bd, type: 3}
@@ -406,6 +410,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vertical thicc
       objectReference: {fileID: 0}
+    - target: {fileID: 5296022235319274335, guid: df283a0cb1c0bba40ac52d06bc33defa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df283a0cb1c0bba40ac52d06bc33defa, type: 3}
 --- !u!1 &6378455769832017750 stripped
@@ -428,6 +436,10 @@ PrefabInstance:
     - target: {fileID: 149885996995389666, guid: 5da97515dee5d2c43977d4530dbb09ad, type: 3}
       propertyPath: m_Name
       value: Horizontal thicc
+      objectReference: {fileID: 0}
+    - target: {fileID: 149885996995389666, guid: 5da97515dee5d2c43977d4530dbb09ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6257848539475313624, guid: 5da97515dee5d2c43977d4530dbb09ad, type: 3}
       propertyPath: m_RootOrder
@@ -646,13 +658,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vertical wall
       objectReference: {fileID: 0}
+    - target: {fileID: 2934472557500867437, guid: 34b6844ec59335848830d75bfd1b7484, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3932974448072943873, guid: 34b6844ec59335848830d75bfd1b7484, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3932974448072943873, guid: 34b6844ec59335848830d75bfd1b7484, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.479
       objectReference: {fileID: 0}
     - target: {fileID: 3932974448072943873, guid: 34b6844ec59335848830d75bfd1b7484, type: 3}
       propertyPath: m_LocalPosition.y

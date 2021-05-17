@@ -116,7 +116,6 @@ public static class WallDeactivator
 
         return new Vector2Int(2,2);
     }
-
     public static Vector2Int DeactivateOwnWall( string nodeParent, string side)
     {
         switch (side)

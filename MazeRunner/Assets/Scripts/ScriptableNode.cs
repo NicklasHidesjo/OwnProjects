@@ -87,7 +87,7 @@ public class ScriptableNode : ScriptableObject
 		if (buildThiccNorth)
         {
 			Vector3 truePos = new Vector3(position.x, position.y + (size - 0.025f), -size/2);
-			Instantiate(walls[1], truePos, Quaternion.Euler(90, 0, 0), parent);
+			Instantiate(walls[1], truePos, Quaternion.Euler(0, 0, 0), parent);
 		}
 		else if (buildNorth)
         {
@@ -109,7 +109,7 @@ public class ScriptableNode : ScriptableObject
 		if (buildThiccSouth)
 		{
 			Vector3 truePos = new Vector3(position.x, position.y - (size - 0.025f), -size / 2);
-			Instantiate(walls[1], truePos, Quaternion.Euler(90, 0, 0), parent);
+			Instantiate(walls[1], truePos, Quaternion.Euler(0, 0, 0), parent);
 		}
 		else if (buildSouth)
 		{
