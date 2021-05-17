@@ -6,12 +6,12 @@ public static class ConvertXY
 {
     // refactor this with either a default or falling cases
 
-    public static Vector2Int ConvertToLowY(Node node, Vector2Int cubeSize)
+    public static Vector2Int ConvertToLowY(ScriptableNode node, Vector2Int cubeSize)
     {
         int x = cubeSize.x - 1;
         int y = cubeSize.y - 1;
 
-        switch (node.transform.parent.name)
+        switch (node.Parent)
         {
             case "Top":
                 return new Vector2Int(node.Coordinates.x, 0);
@@ -36,12 +36,12 @@ public static class ConvertXY
                 return new Vector2Int(0, 0); ;
         }
     }
-    public static Vector2Int ConvertToHighY(Node node, Vector2Int cubeSize)
+    public static Vector2Int ConvertToHighY(ScriptableNode node, Vector2Int cubeSize)
     {
         int x = cubeSize.x - 1;
         int y = cubeSize.y - 1;
 
-        switch (node.transform.parent.name)
+        switch (node.Parent)
         {
             case "Top":
                 return new Vector2Int(node.Coordinates.x, y);
@@ -66,12 +66,12 @@ public static class ConvertXY
                 return new Vector2Int(0, 0);
         }
     }
-    public static Vector2Int ConvertToLowX(Node node, Vector2Int cubeSize)
+    public static Vector2Int ConvertToLowX(ScriptableNode node, Vector2Int cubeSize)
     {
         int x = cubeSize.x - 1;
         int y = cubeSize.y - 1;
 
-        switch (node.transform.parent.name)
+        switch (node.Parent)
         {
             case "Top":
                 return new Vector2Int(node.Coordinates.y, node.Coordinates.x);
@@ -96,12 +96,12 @@ public static class ConvertXY
                 return new Vector2Int(0, 0);
         }
     }
-    public static Vector2Int ConvertToHighX(Node node, Vector2Int cubeSize)
+    public static Vector2Int ConvertToHighX(ScriptableNode node, Vector2Int cubeSize)
     {
         int x = cubeSize.x - 1;
         int y = cubeSize.y - 1;
 
-        switch (node.transform.parent.name)
+        switch (node.Parent)
         {
             case "Top":
                 return new Vector2Int(x - node.Coordinates.y, y);

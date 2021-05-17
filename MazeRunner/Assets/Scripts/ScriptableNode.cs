@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class ScriptableNode : ScriptableObject
 {
-	[SerializeField] GameObject verticalWall;
-	[SerializeField] GameObject horizontalWall;
-
-	[SerializeField] GameObject thiccHorizontal;
-	[SerializeField] GameObject thiccVertical;
-
 	bool buildNorth = true;
 	bool buildEast = true;
 	bool buildSouth = true;
@@ -20,7 +14,7 @@ public class ScriptableNode : ScriptableObject
 	bool buildThiccWest = false;
 
 	Vector2Int coordinates = new Vector2Int(0, 0);
-	public Vector2Int Coordinates { get { return coordinates; } set { coordinates = value; } }
+	public Vector2Int Coordinates { get { return coordinates; } }
 
 	bool partOfMaze = false;
 	public bool PartOfMaze { get { return partOfMaze; } set { partOfMaze = value; } }
@@ -29,10 +23,11 @@ public class ScriptableNode : ScriptableObject
 	public Vector2Int ExploredFrom { get { return exploredFrom; } set { exploredFrom = value; } }
 
 	Vector3 position;
-	int size;
+	float size;
     Transform parent;
+	public string Parent { get { return parent.name; } }
 
-    public ScriptableNode(Vector3 pos, Vector2Int cords, int size, Transform parent)
+    public void Initialize(Vector3 pos, Vector2Int cords, int size, Transform parent)
     {
 		position = pos;
 		coordinates = cords;
@@ -87,50 +82,50 @@ public class ScriptableNode : ScriptableObject
 		}
 	}
 
-	public void BuildWalls()
+	public void BuildWalls(GameObject[] walls)
 	{
 		if (buildThiccNorth)
         {
-			Vector3 truePos = new Vector3(position.x, position.y + (size / 2),0);
-			Instantiate(thiccHorizontal, truePos, Quaternion.identity,parent);
+			Vector3 truePos = new Vector3(position.x, position.y + (size - 0.025f), -size/2);
+			Instantiate(walls[1], truePos, Quaternion.Euler(0, 0, 0), parent);
 		}
 		else if (buildNorth)
         {
-			Vector3 truePos = new Vector3(position.x, position.y + (size / 2),0);
-			Instantiate(horizontalWall, truePos, Quaternion.identity, parent);
+			Vector3 truePos = new Vector3(position.x, position.y + (size / 2), -size / 2);
+			Instantiate(walls[0], truePos, Quaternion.Euler(90, 0, 0), parent);
         }
 
 		if (buildThiccEast)
         {
-			Vector3 truePos = new Vector3(position.x + (size / 2), position.y,0);
-			Instantiate(thiccVertical, truePos, Quaternion.identity, parent);
+			Vector3 truePos = new Vector3(position.x + (size - 0.025f), position.y, -size / 2);
+			Instantiate(walls[3], truePos, Quaternion.Euler(0, 180, 270), parent);
 		}
 		else if (buildEast)
 		{
-			Vector3 truePos = new Vector3(position.x + (size / 2), position.y,0);
-			Instantiate(verticalWall, truePos, Quaternion.identity, parent);
+			Vector3 truePos = new Vector3(position.x + (size / 2), position.y, -size / 2);
+			Instantiate(walls[2], truePos, Quaternion.Euler(90,0,0), parent);
 		}
 
 		if (buildThiccSouth)
 		{
-			Vector3 truePos = new Vector3(position.x, position.y - (size / 2), 0);
-			Instantiate(thiccHorizontal, truePos, Quaternion.identity, parent);
+			Vector3 truePos = new Vector3(position.x, position.y - (size - 0.025f), -size / 2);
+			Instantiate(walls[1], truePos, Quaternion.Euler(0, 0, 0), parent);
 		}
 		else if (buildSouth)
 		{
-			Vector3 truePos = new Vector3(position.x, position.y - (size / 2), 0);
-			Instantiate(horizontalWall, truePos, Quaternion.identity, parent);
+			Vector3 truePos = new Vector3(position.x, position.y - (size / 2), -size / 2);
+			Instantiate(walls[0], truePos, Quaternion.Euler(90, 0, 0), parent);
 		}
 
 		if (buildThiccWest)
 		{
-			Vector3 truePos = new Vector3(position.x - (size / 2), position.y,0);
-			Instantiate(thiccVertical, truePos, Quaternion.identity, parent);
+			Vector3 truePos = new Vector3(position.x - (size - 0.025f), position.y, -size / 2);
+			Instantiate(walls[3], truePos, Quaternion.Euler(0, 180, 270), parent);
 		}
 		else if (buildWest)
 		{
-			Vector3 truePos = new Vector3(position.x - (size / 2), position.y,0);
-			Instantiate(verticalWall, truePos, Quaternion.identity, parent);
+			Vector3 truePos = new Vector3(position.x -(size/2), position.y, -size / 2);
+			Instantiate(walls[2], truePos, Quaternion.Euler(90, 0, 0), parent);
 		}
 	}
 
